@@ -2,16 +2,13 @@
 package repository
 
 import (
-	"math/internal/repository/postgres"
-
-	"gorm.io/gorm"
+	"math/internal/models"
 )
 
 type Users interface {
-	CreateUser(db *gorm.DB, user postgres.User) error
-	DeleteUser(db *gorm.DB, userID int) error
-	GetUserByID(db *gorm.DB, userID int) (postgres.User, error)
-	GetUserByEmail(db *gorm.DB, email string) (postgres.User, error)
-	UpdateUser(db *gorm.DB, user postgres.User) error
-	// GetAllUsers(db *gorm.DB) ([]postgres.User, error)
+	DeleteUser(userID string) error
+	CreateUser(user *models.User) error
+	GetUserByID(userID string) (*models.User, error)
+	// GetUserByEmail(email string) (*models.User, error)
+	// UpdateUser(user *models.User) error
 }

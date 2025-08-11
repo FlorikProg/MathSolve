@@ -1,0 +1,90 @@
+definitions:
+  models.User:
+    properties:
+      completed_informatics_tasks:
+        type: integer
+      completed_math_tasks:
+        type: integer
+      completed_physics_tasks:
+        type: integer
+      completed_russian_tasks:
+        type: integer
+      email:
+        type: string
+      is_active:
+        type: boolean
+      is_admin:
+        type: boolean
+      left_sub_date:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      registration_date:
+        type: string
+      uuid:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /user/create_user:
+    post:
+      consumes:
+      - application/json
+      description: Создаёт нового пользователя
+      parameters:
+      - description: Данные пользователя
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Создать пользователя
+      tags:
+      - user
+  /user/delete_user:
+    delete:
+      consumes:
+      - application/json
+      description: Удаляет пользователя по UUID
+      parameters:
+      - description: UUID пользователя
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Удалить пользователя
+      tags:
+      - user
+swagger: "2.0"

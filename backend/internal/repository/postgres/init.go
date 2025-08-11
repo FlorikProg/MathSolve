@@ -4,19 +4,18 @@ import (
 	"fmt"
 	"os"
 
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
-	"math/internal/models"
-	"github.com/joho/godotenv"
 	"log"
 
+	"github.com/joho/godotenv"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 func InitDatabase() (*gorm.DB, error) {
 	err := godotenv.Load()
-    if err != nil {
-        log.Println("No .env file found")
-    }
+	if err != nil {
+		log.Println("No .env file found")
+	}
 	host := os.Getenv("HOST")
 	user := os.Getenv("USER")
 	password := os.Getenv("PASSWORD")
@@ -36,7 +35,7 @@ func InitDatabase() (*gorm.DB, error) {
 		return nil, fmt.Errorf("failed to connect to database: %w", err)
 	}
 
-	err = db.AutoMigrate(&models.User{})
+	// err = db.AutoMigrate(&models.User{})
 
 	return db, nil
 }
