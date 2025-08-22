@@ -1,27 +1,46 @@
 definitions:
-  models.User:
+  models.AddUser:
     properties:
-      completed_informatics_tasks:
-        type: integer
-      completed_math_tasks:
-        type: integer
-      completed_physics_tasks:
-        type: integer
-      completed_russian_tasks:
-        type: integer
       email:
-        type: string
-      is_active:
-        type: boolean
-      is_admin:
-        type: boolean
-      left_sub_date:
         type: string
       name:
         type: string
       password:
+        minLength: 6
         type: string
-      registration_date:
+    required:
+    - email
+    - name
+    - password
+    type: object
+  models.AuthUser:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  models.DeleteUser:
+    properties:
+      password:
+        type: string
+      uuid:
+        type: string
+    required:
+    - password
+    - uuid
+    type: object
+  models.Tasks:
+    properties:
+      created_by:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      photo:
+        type: string
+      source:
         type: string
       uuid:
         type: string
@@ -29,6 +48,34 @@ definitions:
 info:
   contact: {}
 paths:
+  /task/create_task:
+    post:
+      consumes:
+      - application/json
+      description: Создает новую задачу
+      parameters:
+      - description: Данные задачи
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.Tasks'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Tasks'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Создать задачу
+      tags:
+      - user
   /user/create_user:
     post:
       consumes:
@@ -40,14 +87,14 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/models.User'
+          $ref: '#/definitions/models.AddUser'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.User'
+            $ref: '#/definitions/models.AddUser'
         "400":
           description: Bad Request
           schema:
@@ -68,7 +115,7 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/models.User'
+          $ref: '#/definitions/models.DeleteUser'
       produces:
       - application/json
       responses:
@@ -85,6 +132,40 @@ paths:
               type: string
             type: object
       summary: Удалить пользователя
+      tags:
+      - user
+  /user/login_user:
+    post:
+      consumes:
+      - application/json
+      description: Позволяет пользователю войти в систему
+      parameters:
+      - description: Данные для входа
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.AuthUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.AuthUser'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Вход пользователя
       tags:
       - user
 swagger: "2.0"

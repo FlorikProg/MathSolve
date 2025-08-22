@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -41,6 +43,10 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-bg-white: #F5F5F5;
+  --color-default_bg: #F1F5F9;
+  --color-stoke2: #DBDEE2;
+  --color-default_button_bg: #DCE1E7;
 }
 
 :root {
@@ -120,4 +126,5 @@
     @apply bg-background text-foreground;
   }
 }
+
 

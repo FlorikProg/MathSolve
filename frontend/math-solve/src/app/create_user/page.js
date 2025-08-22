@@ -1,7 +1,7 @@
 import { GalleryVerticalEnd } from "lucide-react"
 import Image from "next/image"
 
-import { LoginForm } from "@/components/login-form"
+import { LoginForm } from "@/components/new_user_form"
 
 export default function LoginPage() {
   return (
@@ -11,7 +11,7 @@ export default function LoginPage() {
           <a href="#" className="flex items-center gap-2 font-medium">
             <div className="border-[1px] border-black/30 rounded-lg p-0.5">  
               <Image
-                src="/image/logo/logo.jpg"
+                src="/logo/logo.png"
                 alt="MathSolve Logo"
                 width={40}
                 height={40}
@@ -30,7 +30,7 @@ export default function LoginPage() {
       </div>
       <div className="bg-muted relative hidden lg:block">
         <img
-          src="/placeholder.svg"
+          src="/image/start_img/login.png"
           alt="Image"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />

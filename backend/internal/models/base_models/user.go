@@ -7,7 +7,7 @@ type User struct {
 	Name                      string     `json:"name"`
 	Email                     string     `json:"email"`
 	Password                  string     `json:"password"`
-	RegistrationDate          time.Time  `json:"registration_date"`
+	RegistrationDate          time.Time  `gorm:"autoCreateTime" json:"registration_date"`
 	IsActive                  bool       `json:"is_active"`
 	IsAdmin                   bool       `json:"is_admin"`
 	LeftSubDate               *time.Time `json:"left_sub_date,omitempty"`

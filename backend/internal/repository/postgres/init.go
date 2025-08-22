@@ -6,6 +6,8 @@ import (
 
 	"log"
 
+	models "math/internal/models/base_models"
+
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -35,7 +37,11 @@ func InitDatabase() (*gorm.DB, error) {
 		return nil, fmt.Errorf("failed to connect to database: %w", err)
 	}
 
-	// err = db.AutoMigrate(&models.User{})
+	err = db.AutoMigrate(&models.User{}, &models.Tasks{}, &models.Tasks{})
+	if err != nil {
+		return nil, fmt.Errorf("failed to auto migrate: %w", err)
+	}
+	log.Println("Database connection established and migrations applied")
 
 	return db, nil
 }
