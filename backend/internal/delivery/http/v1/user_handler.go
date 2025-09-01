@@ -76,7 +76,19 @@ func (h *UserHandler) DeleteUserHandler(c *gin.Context) {
 		return
 	}
 
-	err := h.Usecase.DeleteUserUseCase(user.UUID, user.Password)
+	userIDAny, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "user not found"})
+		return
+	}
+
+	userID, ok := userIDAny.(string)
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "invalid userID type"})
+		return
+	}
+
+	err := h.Usecase.DeleteUserUseCase(userID, user.Password)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

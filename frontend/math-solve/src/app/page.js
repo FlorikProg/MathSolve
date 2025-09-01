@@ -288,19 +288,17 @@ export default function MathSolveLandingPage() {
               </div>
             </div>
 
-            <div className="relative mx-auto max-w-6xl px-4">
-              <div className="rounded-xl overflow-hidden shadow-2xl border border-border/40 bg-gradient-to-b from-background to-muted/20">
-                <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Calculator className="w-16 h-16 mx-auto mb-4 text-primary" />
-                    <h3 className="text-xl font-bold mb-2">Demo изображение</h3>
-                    <p className="text-muted-foreground">Здесь будет скриншот платформы</p>
+            <div className="relative mx-auto w-full">
+              <div className="rounded-xl">
+                <div className="flex items-center justify-center">
+                  <div className="text-center">
+                    <img
+                    src="/image/start_img/Frame 8.png"
+                    />
                   </div>
                 </div>
-                <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10 dark:ring-white/10"></div>
               </div>
-              <div className="absolute -bottom-6 -right-6 -z-10 h-[200px] w-[200px] sm:h-[300px] sm:w-[300px] rounded-full bg-gradient-to-br from-primary/30 to-secondary/30 blur-3xl opacity-70"></div>
-              <div className="absolute -top-6 -left-6 -z-10 h-[200px] w-[200px] sm:h-[300px] sm:w-[300px] rounded-full bg-gradient-to-br from-secondary/30 to-primary/30 blur-3xl opacity-70"></div>
+              
             </div>
           </div>
         </section>

@@ -2,6 +2,7 @@
 package repository
 
 import (
+	api_models "math/internal/models/api_models"
 	models "math/internal/models/base_models"
 )
 
@@ -17,5 +18,8 @@ type Users interface {
 }
 
 type Task interface {
-	CreateTask(*models.Tasks) error
+	CreateTask(*models.Task) error
+	GetTasks(class int, subject string) ([]api_models.GetTaskInfo, error)
+	GetFullTaskInfo(uuid string) ([]models.Task, error)
+	CompleteTask(*models.Solved) error
 }

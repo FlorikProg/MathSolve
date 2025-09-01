@@ -1,6 +1,6 @@
 import { GalleryVerticalEnd } from "lucide-react"
 import Image from "next/image"
-
+import AcceptCookie from "./accept_cookie"
 import { LoginForm } from "@/components/login-form"
 
 export default function LoginPage() {
@@ -35,6 +35,8 @@ export default function LoginPage() {
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
       </div>
+
+
     </div>
   )
 }

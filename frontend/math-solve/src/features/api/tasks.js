@@ -17,7 +17,7 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-export async function CreateTaskApi({name, description, solution, answer, user, source, photo}) {
+export async function CreateTaskApi({name, description, solution, answer, user, source, photo, school_class, subject, tag, complex}) {
   try {
     const res = await api.post("/task/create_task", {
       name,
@@ -25,9 +25,12 @@ export async function CreateTaskApi({name, description, solution, answer, user, 
       solution,
       answer,
       source,
-      created_by: user, // ← исправлено: используем параметр user как created_by
-      photo
-      // uuid убрано - генерируется автоматически
+      created_by: user, 
+      photo, 
+      school_class,
+      subject,
+      tag,
+      complex
     })
 
     return res.data
@@ -38,3 +41,60 @@ export async function CreateTaskApi({name, description, solution, answer, user, 
 
   }
 }
+
+export async function GetTasks({ class_school, subject }) {
+  try {
+    const res = await api.post("/task/get_tasks", {
+      class: class_school,
+      subject: subject
+    });
+
+    return res.data;
+  } catch (error) {
+    alert("Ошибка");
+
+    // ждём выполнения
+    const newAccessToken = await refreshAccessToken();
+    console.log('Новый токен:', newAccessToken);
+
+    console.error("Error get tasks:", error.response?.data || error);
+    throw error;
+  }
+}
+
+
+export async function GetFullInfoAboutTask({ uuid }) {
+  try {
+    const res = await api.post("/task/get_info_about_task", {
+      uuid: uuid
+    });
+
+  
+    return res.data;
+  } catch (error) {
+    alert("Ошибка");
+    console.error("Error get tasks:", error.response?.data || error);
+    throw error;
+  }
+}
+
+export async function CompleteTask({ uuid }) {
+  try {
+    const res = await api.post("/task/complete_task", {
+      uuid
+    });
+    console.log(res)
+  
+    return res.data;
+  } catch (error) {
+    alert("Ошибка");
+
+    console.error("Error get tasks:", error.response?.data || error);
+    throw error;
+  }
+}
+
+
+
+
+

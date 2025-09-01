@@ -36,8 +36,8 @@ export async function CreateUserApi(email, password, username) {
     }
 }
 
-async function refreshAccessToken() {
-  const res = await fetch('/refresh', {
+export async function refreshAccessToken() {
+  const res = await fetch('/user/refresh', {
     method: 'POST',
     credentials: 'include'
   });

@@ -25,7 +25,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "task"
                 ],
                 "summary": "Создать задачу",
                 "parameters": [
@@ -35,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Tasks"
+                            "$ref": "#/definitions/models.Task"
                         }
                     }
                 ],
@@ -43,7 +43,50 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.Tasks"
+                            "$ref": "#/definitions/models.Task"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/task/get_tasks": {
+            "post": {
+                "description": "Получает задачу",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "summary": "Получить все задачи",
+                "parameters": [
+                    {
+                        "description": "Предмет и класс",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.GetTasks"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetTasks"
                         }
                     },
                     "400": {
@@ -247,9 +290,26 @@ const docTemplate = `{
                 }
             }
         },
-        "models.Tasks": {
+        "models.GetTasks": {
             "type": "object",
             "properties": {
+                "class": {
+                    "type": "integer"
+                },
+                "subject": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Task": {
+            "type": "object",
+            "properties": {
+                "answer": {
+                    "type": "string"
+                },
+                "class": {
+                    "type": "string"
+                },
                 "created_by": {
                     "type": "string"
                 },
@@ -262,7 +322,13 @@ const docTemplate = `{
                 "photo": {
                     "type": "string"
                 },
+                "solution": {
+                    "type": "string"
+                },
                 "source": {
+                    "type": "string"
+                },
+                "subject": {
                     "type": "string"
                 },
                 "uuid": {

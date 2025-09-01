@@ -30,8 +30,19 @@ definitions:
     - password
     - uuid
     type: object
-  models.Tasks:
+  models.GetTasks:
     properties:
+      class:
+        type: integer
+      subject:
+        type: string
+    type: object
+  models.Task:
+    properties:
+      answer:
+        type: string
+      class:
+        type: string
       created_by:
         type: string
       description:
@@ -40,7 +51,11 @@ definitions:
         type: string
       photo:
         type: string
+      solution:
+        type: string
       source:
+        type: string
+      subject:
         type: string
       uuid:
         type: string
@@ -59,14 +74,14 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/models.Tasks'
+          $ref: '#/definitions/models.Task'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.Tasks'
+            $ref: '#/definitions/models.Task'
         "400":
           description: Bad Request
           schema:
@@ -75,7 +90,35 @@ paths:
             type: object
       summary: Создать задачу
       tags:
-      - user
+      - task
+  /task/get_tasks:
+    post:
+      consumes:
+      - application/json
+      description: Получает задачу
+      parameters:
+      - description: Предмет и класс
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.GetTasks'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetTasks'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Получить все задачи
+      tags:
+      - tasks
   /user/create_user:
     post:
       consumes:

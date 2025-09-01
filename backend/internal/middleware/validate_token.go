@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"time"
 
@@ -63,4 +64,28 @@ func CheckTokenValid(tokenString string) error {
 	}
 
 	return nil
+}
+
+func GetUserIdFromToken(tokenStr string) (string, error) {
+	secret := []byte(os.Getenv("JWT_SECRET_KEY"))
+	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return secret, nil
+	})
+	if err != nil {
+		return "", err
+	}
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		userID, ok := claims["sub"].(string)
+		if !ok {
+			return "", fmt.Errorf("user_id not found")
+		}
+		return userID, nil
+	}
+
+	return "", fmt.Errorf("invalid token")
 }

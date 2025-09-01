@@ -57,7 +57,7 @@ func main() {
 	userGroup := server.Group("/user")
 	userGroup.Use(middleware.MainMiddleware())
 	{
-		userGroup.DELETE("/delete_user", userHandler.DeleteUserHandler)
+		userGroup.DELETE("/delete_user", userHandler.DeleteUserHandler) // todo: сделать раздекодирование на беке а не на фронте
 		userGroup.POST("/refresh", userHandler.RefreshTokenHandler)
 	}
 
@@ -65,6 +65,9 @@ func main() {
 	taskGroup.Use(middleware.MainMiddleware())
 	{
 		taskGroup.POST("/create_task", taskHandler.CreateTaskHandler)
+		taskGroup.POST("/get_tasks", taskHandler.GetTasksHandler)
+		taskGroup.POST("/get_info_about_task", taskHandler.GetFullInfoAboutTask)
+		taskGroup.POST("/complete_task", taskHandler.CompleteTask)
 	}
 
 	log.Println("⚡ Starting server on :8080")

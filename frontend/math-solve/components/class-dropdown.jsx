@@ -4,13 +4,14 @@ import { useState } from "react"
 import { ChevronDown } from "lucide-react"
 
 const subjects = [
-  { value: "math", label: "Математика",},
-  { value: "cs", label: "Информатика"},
-  { value: "physics", label: "Физика"},
+  { value: 7, label: "7 класс",},
+  { value: 8, label: "8 класс"},
+  { value: 9, label: "9 класс"},
 ]
-export default function SubjectDropdown({ onSelect }) {
+
+export default function ClassDropdown({ onSelect }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedSubject, setSelectedSubject] = useState(subjects[0])
+  const [selectedClass, setSelectedClass] = useState(subjects[0])
 
   return (
     <div className="relative">
@@ -18,7 +19,7 @@ export default function SubjectDropdown({ onSelect }) {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-between w-64 px-4 py-3 text-left bg-white border border-gray-300 rounded-lg hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       >
-        <span className="text-gray-700">{selectedSubject.label}</span>
+        <span className="text-gray-700">{selectedClass.label}</span>
         <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
@@ -28,9 +29,9 @@ export default function SubjectDropdown({ onSelect }) {
             <button
               key={subject.value}
               onClick={() => {
-                setSelectedSubject(subject)
+                setSelectedClass(subject)
                 setIsOpen(false)
-                if (onSelect) onSelect(subject) // <-- передаем выбор наружу
+                if (onSelect) onSelect(subject) // <-- прокидываем выбор наружу
               }}
               className="w-full px-4 py-3 text-left hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg"
             >
@@ -42,3 +43,4 @@ export default function SubjectDropdown({ onSelect }) {
     </div>
   )
 }
+
