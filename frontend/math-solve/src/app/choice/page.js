@@ -4,6 +4,7 @@ import { useState } from "react"
 import NavBar from "@/components/app-navbar"
 import ChoiceSubject from "./choice_subject"
 import ChoiceClass from "./choice_class"
+import { useRouter } from "next/navigation"
 
 export default function Choice() {
   const [subjectVisible, setSubjectVisible] = useState(true)
@@ -11,10 +12,10 @@ export default function Choice() {
   const [selectedSubject, setSelectedSubject] = useState(null)
   const [selectedClass, setSelectedClass] = useState(null)
 
-  
+  const router = useRouter('')
   function navigate(subjectObj, classObj) {
     if (!subjectObj || !classObj) return
-    window.location.href = `/home/${subjectObj.value}/${classObj.value}`
+     router.push(`/home/${subjectObj.value}/${classObj.value}`)
   }
 
   return (

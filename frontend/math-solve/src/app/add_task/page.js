@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -24,9 +24,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { IsUserAdmin } from "@/src/features/api/users"
+import { useRouter } from "next/navigation"
 
 export default function AddTask() {
   const [complexity, setComplexity] = useState("")
+  const [subject, setSubject] = useState("")
+  const router = useRouter()
+
+  useEffect(() => {
+    IsUserAdmin().then(data => {
+      if (!data.is_admin) {
+        router.push("/home")
+      }
+    })
+  }, [router])
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -40,9 +52,9 @@ export default function AddTask() {
       photo: formData.get("photo"),
       user: "Админ",
       school_class: Number(formData.get("class")),
-      subject: formData.get("subject"),
+      subject: subject,
       tag: formData.get("tag"),
-      complex: complexity, // <-- берём из стейта
+      complex: complexity, 
     }
     console.log(data)
     CreateTaskApi(data)
@@ -112,7 +124,19 @@ export default function AddTask() {
 
                   <div className="space-y-2">
                     <Label htmlFor="subject-1">Предмет</Label>
-                    <Input id="subject-1" name="subject" />
+                    <Select onValueChange={setSubject}>
+                      <SelectTrigger>
+                      <SelectValue placeholder="Выберете предмет" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Предмет</SelectLabel>
+                          <SelectItem value="math">Математика 🧮</SelectItem>
+                          <SelectItem value="physics">Физика 🍎</SelectItem>
+                          <SelectItem value="cs">Информатика 🖥️</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   <div className="space-y-2">

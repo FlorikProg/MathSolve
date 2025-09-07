@@ -16,6 +16,7 @@ import {
   BarChart,
   Award,
 } from "lucide-react"
+import Image from "next/image"
 
 const Button = ({ children, variant = "default", size = "default", className = "", onClick, ...props }) => {
   const baseClasses =
@@ -94,6 +95,10 @@ export default function MathSolveLandingPage() {
       }
     }
 
+    function Start() {
+      window.location.href = "/create_user"
+    }
+
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -155,8 +160,15 @@ export default function MathSolveLandingPage() {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
           <div className="flex items-center gap-2 font-bold">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground">
-              <Calculator className="w-5 h-5" />
+            <div className="rounded-lg  flex items-center justify-center text-primary-foreground">
+               <Image
+                              src="/image/logo/logo.jpg"
+                              alt="MathSolve Logo"
+                              width={40}
+                              height={40}
+                              className="h-11 w-11"
+                              style={{ borderRadius: "50%" }}
+                            />
             </div>
             <span className="text-lg">MathSolve</span>
           </div>
@@ -264,7 +276,7 @@ export default function MathSolveLandingPage() {
                 Задачи для 7, задачи для 8 и 9 классов. 
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
-                <Button size="lg" className="rounded-full h-12 px-8 text-base">
+                <Button onClick={Start} size="lg" className="rounded-full h-12 px-8 text-base">
                   Начать решать
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
@@ -430,7 +442,14 @@ export default function MathSolveLandingPage() {
             <div className="space-y-4 sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-2 font-bold">
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground">
-                  <Calculator className="w-4 h-4" />
+                 <Image
+                                  src="/image/logo/logo.jpg"
+                                  alt="MathSolve Logo"
+                                  width={40}
+                                  height={40}
+                                  className="h-11 w-11"
+                                  style={{ borderRadius: "50%" }}
+                                />
                 </div>
                 <span>MathSolve</span>
               </div>

@@ -14,6 +14,17 @@ export default function MathTasksList(difficult) {
   const subject = params.subject;
   const class_school = params.class_school;
 
+  const allTags = tasks.map(task => task.tag); 
+  const uniqueTags = [...new Set(allTags)];
+
+  const topics = [];
+
+  for (let i = 0; i < uniqueTags.length; i++) {
+    topics.push({ name: uniqueTags[i], index: i + 1 });
+  }
+
+  topics.unshift({ name: "Все", index: 0 });
+
   useEffect(() => {
     async function fetchTasks() {
       let response = await GetTasks({
@@ -31,24 +42,27 @@ export default function MathTasksList(difficult) {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
 
-const filterTasks = (task) => {
-  const matchesDifficulty =
-    !difficult.complexity || difficult.complexity === "All" || task.complex.toLowerCase() === difficult.complexity.toLowerCase();
+  const filterTasks = (task) => {
+    const matchesDifficulty =
+      !difficult.complexity || difficult.complexity === "All" || task.complex.toLowerCase() === difficult.complexity.toLowerCase();
 
-  const matchesTopic =
-    !selectedTopic || selectedTopic.name === "Все"
-      ? true
-      : task.tag === selectedTopic.name;
+    const matchesTopic =
+      !selectedTopic || selectedTopic.name === "Все"
+        ? true
+        : task.tag === selectedTopic.name;
 
-  return matchesDifficulty && matchesTopic;
-};
+    return matchesDifficulty && matchesTopic;
+  };
 
 
-  console.log(difficult)
+
+ 
+
+
 
   return (
     <TopicContext.Provider value={{ selectedTopic, setSelectedTopic }}>
-      <Topic />
+      <Topic topics={topics} />
       <div className="p-0">
         <div className="border border-gray-200 rounded-2xl bg-default_bg mt-5">
           <div className="p-5 border-b border-gray-300 text-2xl">

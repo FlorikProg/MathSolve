@@ -16,12 +16,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { useRouter } from "next/navigation"
 
 export function LoginForm({className, ...props}) {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const [error_message, setErrorMessage] = useState("")
-
+  const router = useRouter()
   async function HandleSubmit(e) {
     e.preventDefault()
     setLoading(true)
@@ -44,6 +45,11 @@ export function LoginForm({className, ...props}) {
       if (error.status == 409) {
         setErrorMessage("Такой пользователь уже существует")
         setOpen(true)
+      }
+
+      if (error.status == 200) {
+        router.push('/login_user'); 
+        return
       }
 
       throw error;
@@ -89,7 +95,7 @@ export function LoginForm({className, ...props}) {
           <Input id="password" name="password" type="password" required />
         </div>
         <Button type="submit" className="w-full" id="login-button" disabled={loading}>
-          { loading ? "Секунду..." : "Войти" }
+          { loading ? "Секунду..." : "Создать" }
         </Button>
       </div>
       <div className="text-center text-sm">

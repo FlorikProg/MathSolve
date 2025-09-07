@@ -11,7 +11,7 @@ export default function LoginPage() {
           <a href="#" className="flex items-center gap-2 font-medium">
             <div className="border-[1px] border-black/30 rounded-lg p-0.5">  
               <Image
-                src="/logo/logo.png"
+                src="/image/logo/logo.jpg"
                 alt="MathSolve Logo"
                 width={40}
                 height={40}

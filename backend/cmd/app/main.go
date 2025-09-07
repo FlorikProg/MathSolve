@@ -40,7 +40,7 @@ func main() {
 	})
 
 	server.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowOrigins:     []string{"http://localhost:8080"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -48,28 +48,31 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	authGroup := server.Group("/auth")
+	authGroup := server.Group("/api/auth")
 	{
 		authGroup.POST("/login_user", userHandler.LoginUserHandler)
 		authGroup.POST("/create_user", userHandler.CreateUserHandler)
+		authGroup.POST("/refresh", userHandler.RefreshTokenHandler)
 	}
 
-	userGroup := server.Group("/user")
+	userGroup := server.Group("/api/user")
 	userGroup.Use(middleware.MainMiddleware())
 	{
-		userGroup.DELETE("/delete_user", userHandler.DeleteUserHandler) // todo: сделать раздекодирование на беке а не на фронте
-		userGroup.POST("/refresh", userHandler.RefreshTokenHandler)
+		userGroup.DELETE("/delete_user", userHandler.DeleteUserHandler)
+		userGroup.POST("/get_user", userHandler.GetUserHandler)
+		userGroup.POST("/is_admin", userHandler.IsUserAdmin)
 	}
 
-	taskGroup := server.Group("/task")
+	taskGroup := server.Group("/api/task")
 	taskGroup.Use(middleware.MainMiddleware())
 	{
 		taskGroup.POST("/create_task", taskHandler.CreateTaskHandler)
 		taskGroup.POST("/get_tasks", taskHandler.GetTasksHandler)
 		taskGroup.POST("/get_info_about_task", taskHandler.GetFullInfoAboutTask)
 		taskGroup.POST("/complete_task", taskHandler.CompleteTask)
+		taskGroup.POST("/is_solved", taskHandler.IsTaskSolveByUser)
 	}
 
 	log.Println("⚡ Starting server on :8080")
-	server.Run(":8080")
+	server.Run(":8081")
 }

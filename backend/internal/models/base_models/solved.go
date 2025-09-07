@@ -5,4 +5,5 @@ type Solved struct {
 	TaskID    string `json:"task_id"`
 	Is_solved bool   `json:"is_solved"`
 	User_id   string `json:"user_id"`
+	Attempts  int    `json:"attempts"`
 }

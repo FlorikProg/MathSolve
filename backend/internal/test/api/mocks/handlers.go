@@ -1,6 +1,7 @@
 package mocks
 
 import (
+	api_models "math/internal/models/api_models"
 	models "math/internal/models/base_models"
 )
 
@@ -20,4 +21,12 @@ func (m *NewMockUserUseCase) LoginUserUseCase(email, password string) (string, s
 
 func (m *NewMockUserUseCase) RefreshAccessTokenUseCase(refreshToken string) (string, error) {
 	return "", nil
+}
+
+func (m *NewMockUserUseCase) GetInfoAboutUserUseCase(user_id string) ([]api_models.GetBaseInfoAboutUser, error) {
+	return []api_models.GetBaseInfoAboutUser{}, nil
+}
+
+func (m *NewMockUserUseCase) IsUserAdminUsecase(user_id string) (bool, error) {
+	return false, nil
 }

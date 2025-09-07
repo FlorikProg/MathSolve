@@ -40,7 +40,14 @@ func (h *TaskHandler) CreateTaskHandler(c *gin.Context) {
 
 	fmt.Println(new_task)
 
-	err = h.Usecase.CreateTaskUsecase(&new_task)
+	var user_id string
+	val, exists := c.Get("userID")
+	if exists {
+		myVal := val.(string)
+		user_id = myVal
+	}
+
+	err = h.Usecase.CreateTaskUsecase(&new_task, user_id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "usecase error"})
 		return
@@ -67,7 +74,15 @@ func (h *TaskHandler) GetTasksHandler(c *gin.Context) {
 		return
 	}
 
-	tasks, err := h.Usecase.GetTaskUsecase(getTasks.Class, getTasks.Subject)
+	var user_id string
+
+	val, exists := c.Get("userID")
+	if exists {
+		myVal := val.(string)
+		user_id = myVal
+	}
+
+	tasks, err := h.Usecase.GetTaskUsecase(getTasks.Class, getTasks.Subject, user_id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "usecase error"})
 		return
@@ -94,7 +109,7 @@ func (h *TaskHandler) GetFullInfoAboutTask(c *gin.Context) {
 }
 
 func (h *TaskHandler) CompleteTask(c *gin.Context) {
-	var getUuidForTask api_models.GetUuid
+	var getUuidForTask api_models.CompleteTask
 	err := c.ShouldBindJSON(&getUuidForTask)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid data"})
@@ -104,6 +119,7 @@ func (h *TaskHandler) CompleteTask(c *gin.Context) {
 	var complete_task base_models.Solved
 	fmt.Println(getUuidForTask.UUID)
 	complete_task.TaskID = getUuidForTask.UUID
+	complete_task.Attempts = getUuidForTask.Attempts
 
 	val, exists := c.Get("userID")
 	if exists {
@@ -121,4 +137,29 @@ func (h *TaskHandler) CompleteTask(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"status": "ok"})
+}
+
+func (h *TaskHandler) IsTaskSolveByUser(c *gin.Context) {
+	var getUuidForTask api_models.GetUuid
+	err := c.ShouldBindJSON(&getUuidForTask)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid data"})
+		return
+	}
+
+	var user_id string
+	val, exists := c.Get("userID")
+	if exists {
+		myVal := val.(string)
+		user_id = myVal
+	}
+
+	is_solved, err := h.Usecase.IsTaskSolvedUsecase(user_id, getUuidForTask.UUID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "usecase error"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"is_solved": is_solved})
+
 }

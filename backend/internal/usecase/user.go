@@ -3,6 +3,7 @@ package usecase
 import (
 	"errors"
 	"log"
+	api_models "math/internal/models/api_models"
 	models "math/internal/models/base_models"
 	"math/internal/repository"
 	"os"
@@ -23,6 +24,8 @@ type UserUsecase interface {
 	DeleteUserUseCase(id, password string) error
 	LoginUserUseCase(email, password string) (string, string, error)
 	RefreshAccessTokenUseCase(refreshToken string) (string, error)
+	GetInfoAboutUserUseCase(user_id string) ([]api_models.GetBaseInfoAboutUser, error)
+	IsUserAdminUsecase(user_id string) (bool, error)
 }
 
 type UserUseCase struct {
@@ -139,4 +142,30 @@ func (u *UserUseCase) RefreshAccessTokenUseCase(refreshToken string) (string, er
 	}
 
 	return accessToken, nil
+}
+
+func (u *UserUseCase) GetInfoAboutUserUseCase(user_id string) ([]api_models.GetBaseInfoAboutUser, error) {
+	if user_id == "" {
+		return []api_models.GetBaseInfoAboutUser{}, errors.New("empty user_id")
+	}
+
+	info, err := u.repo.GetBaseInfoAboutUser(user_id)
+	if err != nil {
+		return []api_models.GetBaseInfoAboutUser{}, err
+	}
+
+	return info, nil
+}
+
+func (u *UserUseCase) IsUserAdminUsecase(user_id string) (bool, error) {
+	if user_id == "" {
+		return false, errors.New("empty data")
+	}
+
+	is_admin, err := u.repo.IsUserAdmin(user_id)
+	if err != nil {
+		return false, errors.New("empty data")
+	}
+	return is_admin, nil
+
 }

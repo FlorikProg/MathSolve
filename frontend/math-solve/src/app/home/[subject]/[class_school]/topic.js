@@ -2,19 +2,19 @@ import { useTopic } from "./topicContext";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-export default function Topic() {
+export default function Topic({topics}) {
   const { selectedTopic, setSelectedTopic } = useTopic();
   const [isOpen, setIsOpen] = useState(false);
 
-  const topics = [
-    { name: "Все", index: 1 },
-    { name: "Функции", index: 2 },
-    { name: "Комбинаторика", index: 3 },
-    { name: "Уравнения", index: 4 },
-    { name: "Неравенства", index: 5 },
-    { name: "Хз что", index: 6 },
-    { name: "Еще что-то", index: 7 },
-  ];
+  // const topics = [
+  //   { name: "Все", index: 1 },
+  //   { name: "Функции", index: 2 },
+  //   { name: "Комбинаторика", index: 3 },
+  //   { name: "Уравнения", index: 4 },
+  //   { name: "Неравенства", index: 5 },
+  //   { name: "Хз что", index: 6 },
+  //   { name: "Еще что-то", index: 7 },
+  // ];
 
   const topicClass = (t) =>
     `px-5 py-2 rounded-full border text-base cursor-pointer transition-colors

@@ -2,6 +2,7 @@ package v1_http
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	models "math/internal/models/api_models"
 	base_models "math/internal/models/base_models"
@@ -153,5 +154,46 @@ func (h *UserHandler) RefreshTokenHandler(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"access_token": newAccessToken,
+	})
+}
+
+func (h *UserHandler) GetUserHandler(c *gin.Context) {
+	var user_id string
+	val, exists := c.Get("userID")
+	if exists {
+		myVal := val.(string)
+		user_id = myVal
+	}
+
+	fmt.Println(user_id)
+
+	info, err := h.Usecase.GetInfoAboutUserUseCase(user_id)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Handler error"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"user": info,
+	})
+}
+
+func (h UserHandler) IsUserAdmin(c *gin.Context) {
+	var user_id string
+	val, exists := c.Get("userID")
+	if exists {
+		myVal := val.(string)
+		user_id = myVal
+	}
+
+	info, err := h.Usecase.IsUserAdminUsecase(user_id)
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Handler error"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"is_admin": info,
 	})
 }

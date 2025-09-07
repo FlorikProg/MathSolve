@@ -1,9 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://localhost:8080/api/",
   timeout: 5000,
 })
+
+
 
 export async function loginUserApi(email, password) {
     try {
@@ -16,7 +18,7 @@ export async function loginUserApi(email, password) {
         return res.data;
     } 
     catch (error) {
-        console.error("Error logging in:", error);
+        
         throw error; 
     }
 }
@@ -31,21 +33,17 @@ export async function CreateUserApi(email, password, username) {
         return res.data
     } 
     catch (error) {
-        console.error("Error create user:", error);
+        
         throw error; 
     }
 }
 
 export async function refreshAccessToken() {
-  const res = await fetch('/user/refresh', {
-    method: 'POST',
-    credentials: 'include'
-  });
+  const res = await api.post("/auth/refresh", {}, { withCredentials: true });
 
-  if (!res.ok) throw new Error('Refresh failed');
+  if (res.status !== 200) throw new Error('Refresh failed');
 
-  const data = await res.json();
-  const newAccessToken = data.access_token;
+  const newAccessToken = res.data.access_token;
 
   return newAccessToken;
 }

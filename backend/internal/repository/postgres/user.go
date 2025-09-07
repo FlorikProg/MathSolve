@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"fmt"
+	api_models "math/internal/models/api_models"
 	models "math/internal/models/base_models"
 
 	"gorm.io/gorm"
@@ -83,4 +84,28 @@ func (r *UserRepo) CheckExistsByEmail(email string) (bool, error) {
 		return false, fmt.Errorf("error checking user existence: %w", err)
 	}
 	return user.UUID != "", nil
+}
+
+func (r *UserRepo) GetBaseInfoAboutUser(user_id string) ([]api_models.GetBaseInfoAboutUser, error) {
+	var users []api_models.GetBaseInfoAboutUser
+
+	err := r.db.Table("users").Where("uuid = ?", user_id).Find(&users).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}
+
+func (r *UserRepo) IsUserAdmin(userID string) (bool, error) {
+	var isAdmin bool
+	err := r.db.
+		Table("users").
+		Select("is_admin").
+		Where("uuid = ?", userID).
+		Scan(&isAdmin).Error
+	if err != nil {
+		return false, err
+	}
+	return isAdmin, nil
 }

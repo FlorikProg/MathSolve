@@ -1,14 +1,12 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
-// todo: сделать принятие user_id через токен и сохранить в context
 func MainMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.GetHeader("Authorization")
@@ -21,8 +19,6 @@ func MainMiddleware() gin.HandlerFunc {
 		if strings.HasPrefix(token, "Bearer") {
 			token = strings.TrimPrefix(token, "Bearer ")
 		}
-
-		fmt.Println(token)
 
 		if CheckTokenValid(token) != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
