@@ -24,7 +24,7 @@ export default function Choice() {
         <NavBar />
       </div>
 
-      <div className="pt-16"> 
+      <div className=""> 
         <ChoiceSubject
           display={subjectVisible}
           onSelect={(subject) => {

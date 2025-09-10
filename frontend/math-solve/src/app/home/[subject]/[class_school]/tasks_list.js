@@ -66,7 +66,7 @@ export default function MathTasksList(difficult) {
       <div className="p-0">
         <div className="border border-gray-200 rounded-2xl bg-default_bg mt-5">
           <div className="p-5 border-b border-gray-300 text-2xl">
-            Задачи ({tasks.length})
+            Задачи ({tasks.filter(filterTasks).length})
           </div>
 
           {tasks.filter(filterTasks).map((task, index) => (

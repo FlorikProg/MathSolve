@@ -9,8 +9,9 @@ import {
 import { Input } from "./ui/input";
 import Link from "next/link";
 import { GetUserApi } from "@/src/features/api/users";
+import { ChevronLeft } from "lucide-react";
 
-export default function NavBar({ is_search }) {
+export default function NavBar({ is_search, link_url }) {
   const [display, setDisplay] = React.useState("none");
   const [username, setUserName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -38,8 +39,8 @@ export default function NavBar({ is_search }) {
   return (
     <div className="border-b">
       <div className="px-4 sm:px-10 pt-5 pb-4 flex justify-between items-center">
-        <Link href="/home">
-          <p className="text-xl font-semibold text-primary flex">MathSolve</p>
+        <Link href={link_url || "/choice"}>
+          <p className="text-xl font-semibold text-primary flex">{link_url ? <ChevronLeft/> : "MathSolve"}</p>
         </Link>
 
         <div className={`flex-1 mx-4 sm:mx-10`} style={{ display: display }}>

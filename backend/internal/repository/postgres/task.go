@@ -65,7 +65,7 @@ func (r *TaskRepo) GetTasks(class int, subject, user_id string) ([]api_models.Ge
 func (r TaskRepo) GetFullTaskInfo(uuid string) ([]base_models.Task, error) {
 	var tasks []base_models.Task
 	result := r.db.
-		Select("description, answer, solution, source, photo").
+		Select("description, answer, solution, source, photo, school_class, subject").
 		Where("uuid = ?", uuid).
 		Find(&tasks)
 

@@ -17,6 +17,7 @@ import {
   Award,
 } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 const Button = ({ children, variant = "default", size = "default", className = "", onClick, ...props }) => {
   const baseClasses =
@@ -95,10 +96,6 @@ export default function MathSolveLandingPage() {
       }
     }
 
-    function Start() {
-      window.location.href = "/create_user"
-    }
-
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -158,7 +155,7 @@ export default function MathSolveLandingPage() {
           isScrolled ? "bg-background/80 shadow-sm" : "bg-transparent"
         }`}
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
+        <div id="demo" className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
           <div className="flex items-center gap-2 font-bold">
             <div className="rounded-lg  flex items-center justify-center text-primary-foreground">
                <Image
@@ -173,32 +170,21 @@ export default function MathSolveLandingPage() {
             <span className="text-lg">MathSolve</span>
           </div>
           
-          <nav className="hidden md:flex gap-6 lg:gap-8">
+          {/* <nav className="hidden md:flex gap-6 lg:gap-8">
             <a
               href="#features"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               Предметы
             </a>
+  
             <a
-              href="#testimonials"
+              href="#demo"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              Отзывы
+              Демо
             </a>
-            <a
-              href="#pricing"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Цены
-            </a>
-            <a
-              href="#faq"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Вопросы
-            </a>
-          </nav>
+          </nav> */}
           
           <div className="hidden md:flex gap-4 items-center">
             <Button variant="ghost" size="icon" onClick={toggleTheme} className="rounded-full">
@@ -211,10 +197,12 @@ export default function MathSolveLandingPage() {
             >
               Войти
             </a>
-            <Button className="rounded-full">
+            <Link href={"/create_user"}>
+                      <Button className="rounded-full">
               Начать
               <ChevronRight className="ml-1 w-4 h-4" />
             </Button>
+            </Link>
           </div>
           
           <div className="flex items-center gap-2 md:hidden">
@@ -245,9 +233,9 @@ export default function MathSolveLandingPage() {
                 Вопросы
               </a>
               <div className="flex flex-col gap-2 pt-2 border-t">
-                <a href="/login_user" className="py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/login_user" className="py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
                   Войти
-                </a>
+                </Link>
                 <Button className="rounded-full w-full">
                   Начать
                   <ChevronRight className="ml-1 w-4 h-4" />
@@ -276,13 +264,12 @@ export default function MathSolveLandingPage() {
                 Задачи для 7, задачи для 8 и 9 классов. 
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
-                <Button onClick={Start} size="lg" className="rounded-full h-12 px-8 text-base">
+              <Link href="/create_user">
+                          <Button size="lg" className="rounded-full h-12 px-8 text-base">
                   Начать решать
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
-                <Button size="lg" variant="outline" className="rounded-full h-12 px-8 text-base bg-transparent">
-                  Посмотреть демо
-                </Button>
+              </Link>
               </div>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
