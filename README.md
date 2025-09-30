@@ -107,7 +107,7 @@ MIT License
 ## 🤝 Контакты и вклад
 
 - Pull requests и issues приветствуются!
-- Для связи: [your-email@example.com](mailto:your-email@example.com)
+- Для связи: @RomanLoginov101(Telegram)
 
 ---
 
